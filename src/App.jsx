@@ -1,30 +1,18 @@
+import { useState } from "react";
 import "./App.css";
+import Header from "./components/Header";
+import Hero from "./components/Hero";
+import Search from "./components/Search";
 
 const App = () => {
+  const [searchTerm, setSearchTerm] = useState("");
+
   return (
     <main>
-      <header className="header">
-        <nav className="header__navbar">
-          <img className="header__logo" src="/vite.svg"></img>
-          <h1 className="header__name">Music App</h1>
-          <ul className="header__menu">
-            <li>
-              <a>Home</a>
-            </li>
-            <li>
-              <a>Library</a>
-            </li>
-            <li>
-              <a>Profile</a>
-            </li>
-            <li>
-              <a>Settings</a>
-            </li>
-          </ul>
-        </nav>
-      </header>
-
-      <div className="hero"></div>
+      <Header />
+      <Hero />
+      <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+      <p>{searchTerm}</p>
     </main>
   );
 };

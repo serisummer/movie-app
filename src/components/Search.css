@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+@layer components {
+  .search {
+    @apply flex bg-white rounded-xl m-2;
+  }
+
+  .search__img {
+    @apply w-[2rem] m-2;
+  }
+
+  .search__input {
+    @apply bg-gray-300 rounded-xl m-2 px-2 w-full text-black font-bold;
+  }
+}

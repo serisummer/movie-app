@@ -1,0 +1,28 @@
+@import "tailwindcss";
+
+@layer components {
+  .header__navbar {
+    @apply flex justify-between items-center 
+           h-fit bg-teal-500 p-2 m-2 overflow-x-scroll rounded-sm;
+  }
+
+  .header__logo {
+    @apply m-2 w-[50px];
+  }
+
+  .header__name {
+    @apply text-white text-nowrap text-[clamp(1.5rem,4vw,2rem)] font-bold m-2;
+  }
+
+  .header__logo__name {
+    @apply flex shrink-0;
+  }
+
+  .header__menu {
+    @apply text-white list-none m-2;
+  }
+
+  .header__menu li {
+    @apply inline-block text-nowrap p-2 px-3;
+  }
+}

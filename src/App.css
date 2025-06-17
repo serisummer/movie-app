@@ -1,23 +1,7 @@
 @import "tailwindcss";
 
 @layer components {
-  .header__navbar {
-    @apply flex justify-around items-center w-screen h-fit bg-green-500;
-  }
-
-  .header__name {
-    @apply text-white text-[2rem] font-bold;
-  }
-
-  .header__menu {
-    @apply text-white list-none;
-  }
-
-  .header__menu li {
-    @apply inline-block p-2;
-  }
-
-  .hero {
-    @apply bg-blue-400 w-screen h-[10rem];
+  * {
+    @apply border-0 border-black text-white;
   }
 }
