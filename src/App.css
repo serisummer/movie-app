@@ -2,6 +2,6 @@
 
 @layer components {
   * {
-    @apply border-0 border-black text-white;
+    @apply border-0 border-white text-white;
   }
 }

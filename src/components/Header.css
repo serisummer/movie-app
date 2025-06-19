@@ -11,7 +11,7 @@
   }
 
   .header__name {
-    @apply text-white text-nowrap text-[clamp(1.5rem,4vw,2rem)] font-bold m-2;
+    @apply text-white text-nowrap text-[clamp(1.5rem,4vw,2rem)] font-bold m-2 mt-4;
   }
 
   .header__logo__name {
@@ -23,6 +23,6 @@
   }
 
   .header__menu li {
-    @apply inline-block text-nowrap p-2 px-3;
+    @apply inline-block text-nowrap font-bold bg-teal-600 m-2 p-2 rounded-sm;
   }
 }

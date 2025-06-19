@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+@layer components {
+  .movies__list {
+    @apply m-2 p-2;
+  }
+
+  .movies__list__header {
+    @apply text-start font-extrabold mx-2 pl-4 text-[clamp(1.5rem,4vw,2rem)];
+  }
+
+  .movies__list__movies {
+    @apply flex justify-around m-2 p-1 flex-wrap rounded-sm;
+  }
+}

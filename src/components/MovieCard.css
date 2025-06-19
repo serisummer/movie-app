@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+@layer components {
+  .movie {
+    @apply flex flex-col justify-start items-center p-3 m-2 rounded-lg inset-shadow-sm inset-shadow-teal-600;
+  }
+
+  .movie__poster {
+    @apply w-[max(20vw,15rem)] rounded-lg m-2;
+  }
+
+  .movie__title {
+    @apply text-center mt-2 w-[max(20vw,15rem)];
+  }
+}
