@@ -9,8 +9,8 @@ const MovieCard = ({
         className="movie__poster"
         src={
           poster_path
-            ? `https://image.tmdb.org/t/p/w500/${poster_path}`
-            : "/src/assets/no-image-svgrepo-com.svg"
+            ? `https://image.tmdb.org/t/p/w780/${poster_path}`
+            : "/no-image-svgrepo-com.svg"
         }
       ></img>
       <p className="movie__title">{title}</p>

@@ -2,13 +2,43 @@
 
 @layer components {
   .hero {
-    @apply flex h-[10rem] m-2 justify-center items-center rounded-sm
-           bg-linear-45 from-indigo-500 from-10% 
-                        via-sky-500 via-30% 
-                        to-emerald-500 to-90%;
+    @apply relative w-full bg-cover bg-center bg-no-repeat;
+    background-image: var(--bg-url);
+    background-size: 100%, cover;
+    background-position: top;
+    position: relative;
+    height: 40vw;
+    animation: fadeIn 1s ease-in-out;
   }
 
-  .hero__text {
-    @apply text-white font-extrabold text-[clamp(3.25rem,12vw,6rem)];
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  .hero__underlay {
+    @apply absolute inset-0 bg-gradient-to-t from-black/80 to-transparent;
+  }
+
+  .hero__countdown {
+    @apply absolute top-4 left-4 text-white text-sm font-mono bg-black/50 px-3 py-1 rounded-full;
+  }
+
+  .hero__content {
+    @apply absolute bottom-8 left-8 w-[75vw];
+  }
+
+  .hero__title {
+    @apply text-white text-4xl font-bold mb-2;
+    font-size: 2vw;
+  }
+
+  .hero__description {
+    @apply text-gray-300 text-sm leading-relaxed;
+    font-size: 1vw;
   }
 }

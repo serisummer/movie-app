@@ -1,9 +1,12 @@
 @import "tailwindcss";
+@theme {
+  --breakpoint-xs: 550px;
+}
 
 @layer components {
   .header__navbar {
-    @apply flex justify-between items-center 
-           h-fit bg-teal-500 p-2 m-2 overflow-x-scroll rounded-sm;
+    @apply flex max-xs:flex-col justify-between items-center 
+           h-fit bg-teal-500;
   }
 
   .header__logo {
@@ -11,7 +14,8 @@
   }
 
   .header__name {
-    @apply text-white text-nowrap text-[clamp(1.5rem,4vw,2rem)] font-bold m-2 mt-4;
+    @apply text-white text-nowrap font-bold m-2 mt-4;
+    font-size: clamp(1.5rem, 4vw, 2rem);
   }
 
   .header__logo__name {
@@ -22,7 +26,7 @@
     @apply text-white list-none m-2;
   }
 
-  .header__menu li {
+  .header__menu_item {
     @apply inline-block text-nowrap font-bold bg-teal-600 m-2 p-2 rounded-sm;
   }
 }

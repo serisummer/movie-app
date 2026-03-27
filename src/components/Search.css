@@ -2,7 +2,11 @@
 
 @layer components {
   .search {
-    @apply flex bg-white rounded-xl m-2;
+    @apply bg-gray-800 p-4 mt-4 max-w-[75vw] w-full mx-auto;
+  }
+
+  .search__container {
+    @apply flex bg-white rounded-lg;
   }
 
   .search__img {
@@ -10,6 +14,6 @@
   }
 
   .search__input {
-    @apply bg-gray-300 rounded-xl m-2 px-2 w-full text-black font-bold;
+    @apply m-2 px-2 w-full text-black font-bold outline-none bg-transparent;
   }
 }

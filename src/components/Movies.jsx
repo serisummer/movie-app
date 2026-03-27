@@ -1,48 +1,7 @@
-import { useEffect, useState } from "react";
 import "./Movies.css";
 import MovieCard from "./MovieCard";
 
-const ACCESS_TOKEN = import.meta.env.VITE_TMDB_ACCESS_TOKEN;
-const BASE_URL = "https://api.themoviedb.org/3/";
-const OPTIONS = {
-  method: "GET",
-  headers: {
-    accept: "application/json",
-    Authorization: `Bearer ${ACCESS_TOKEN}`,
-  },
-};
-
-const Movies = ({ query }) => {
-  const [errorMessage, setErrorMessage] = useState("");
-  const [movies, setMovies] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-
-  const fetchMovies = async (query = "") => {
-    setIsLoading(true);
-    try {
-      const endpoint = query
-        ? `${BASE_URL}/search/movie?query=${encodeURI(query)}`
-        : `${BASE_URL}/discover/movie?sort_by=popularity.desc`;
-      const response = await fetch(endpoint, OPTIONS);
-      if (!response.ok) {
-        setErrorMessage("Failed to fetch movies");
-        return;
-      } else {
-        const data = await response.json();
-        setMovies(data.results);
-        return;
-      }
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchMovies(query);
-  }, [query]);
-
+const Movies = ({ isLoading, errorMessage, movies, query }) => {
   return (
     <div className="movies">
       {isLoading ? (
@@ -51,13 +10,15 @@ const Movies = ({ query }) => {
         <p className="movies__status">{errorMessage}</p>
       ) : (
         <div className="movies__list">
-          {query ? (
-            <p className="movies__list__header">
-              Total Results: {movies.length}
-            </p>
-          ) : (
-            <h2 className="movies__list__header">POPULAR</h2>
-          )}
+          <div className="movies__list__header">
+            {query ? (
+              <h2 className="movies__list__header_text">
+                Total Results: {movies.length}
+              </h2>
+            ) : (
+              <h2 className="movies__list__header_text">Popular</h2>
+            )}
+          </div>
           <ul className="movies__list__movies">
             {movies.map((movie) => (
               <MovieCard key={movie.id} movie={movie}></MovieCard>

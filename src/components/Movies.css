@@ -1,12 +1,13 @@
 @import "tailwindcss";
 
 @layer components {
-  .movies__list {
-    @apply m-2 p-2;
+  .movies__list__header {
+    @apply bg-gray-800;
   }
 
-  .movies__list__header {
-    @apply text-start font-extrabold mx-2 pl-4 text-[clamp(1.5rem,4vw,2rem)];
+  .movies__list__header_text {
+    @apply text-center font-extrabold;
+    font-size: clamp(1.5rem, 4vw, 2rem);
   }
 
   .movies__list__movies {
