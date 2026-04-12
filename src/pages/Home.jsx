@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import { useDebounce } from "react-use";
 
-import Hero from "./components/Hero";
-import Search from "./components/Search";
-import Movies from "./components/Movies";
-import Spinner from "./components/Spinner";
+import Hero from "../components/Hero";
+import Search from "../components/Search";
+import Movies from "../components/Movies";
+import Spinner from "../components/Spinner";
+import Button from "../components/Button";
 
 const ACCESS_TOKEN = import.meta.env.VITE_TMDB_ACCESS_TOKEN;
 const BASE_URL = "https://api.themoviedb.org/3/";
@@ -19,34 +20,39 @@ const OPTIONS = {
 const Home = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
+  useDebounce(() => setDebouncedSearchTerm(searchTerm), 500, [searchTerm]);
 
   const [movies, setMovies] = useState([]);
   const [isMoviesLoading, setIsMoviesLoading] = useState(false);
-  const [moviesErrorMsg, setMoviesErrorMsg] = useState(false);
+  const [moviesErrorMsg, setMoviesErrorMsg] = useState("");
 
   const [featuredMovies, setFeaturedMovies] = useState([]);
   const [isFeaturedLoading, setIsFeaturedLoading] = useState(false);
-  const [featuredErrorMsg, setFeaturedErrorMsg] = useState(false);
+  const [featuredErrorMsg, setFeaturedErrorMsg] = useState("");
   const [featuredIndex, setFeaturedIndex] = useState(0);
-  const [timeLeft, setTimeLeft] = useState(15);
+  const [timeLeft, setTimeLeft] = useState(10);
 
-  useDebounce(() => setDebouncedSearchTerm(searchTerm), 500, [searchTerm]);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
-  const fetchMovies = async (query = "") => {
+  const fetchMovies = async (query = "", currentPage = 1) => {
     setIsMoviesLoading(true);
     setMoviesErrorMsg("");
     try {
       const endpoint = query
-        ? `${BASE_URL}search/movie?query=${encodeURIComponent(query)}`
-        : `${BASE_URL}discover/movie?sort_by=popularity.desc`;
+        ? `${BASE_URL}search/movie?query=${encodeURIComponent(query)}&page=${currentPage}`
+        : `${BASE_URL}discover/movie?sort_by=popularity.desc&page=${currentPage}`;
       const response = await fetch(endpoint, OPTIONS);
       if (response.ok) {
         const data = await response.json();
-        setMovies(data.results ?? []);
-        return;
+        setTotalPages(data.total_pages);
+        if (currentPage === 1) {
+          setMovies(data.results ?? []);
+        } else {
+          setMovies((prev) => [...prev, ...(data.results ?? [])]);
+        }
       } else {
         setMoviesErrorMsg("Failed to fetch movies");
-        return;
       }
     } catch (error) {
       console.error(error);
@@ -63,10 +69,10 @@ const Home = () => {
       const response = await fetch(endpoint, OPTIONS);
       if (response.ok) {
         const data = await response.json();
-        setFeaturedMovies(data.results.slice(0, 10) ?? []);
+        setFeaturedMovies((data.results ?? []).slice(0, 10));
         return;
       } else {
-        setFeaturedErrorMsg("Failed to fetch movies");
+        setFeaturedErrorMsg("Failed to fetch featured movies");
         return;
       }
     } catch (error) {
@@ -75,10 +81,6 @@ const Home = () => {
       setIsFeaturedLoading(false);
     }
   };
-
-  useEffect(() => {
-    fetchMovies(debouncedSearchTerm);
-  }, [debouncedSearchTerm]);
 
   useEffect(() => {
     fetchFeaturedMovies();
@@ -101,19 +103,45 @@ const Home = () => {
     return () => clearInterval(countdown);
   }, [featuredIndex]);
 
+  useEffect(() => {
+    setPage(1);
+    fetchMovies(debouncedSearchTerm, 1);
+  }, [debouncedSearchTerm]);
+
+  useEffect(() => {
+    if (page !== 1) {
+      fetchMovies(debouncedSearchTerm, page);
+    }
+  }, [page]);
+
   return (
     <>
-      <div key={featuredIndex}>
-        <Hero movie={featuredMovies[featuredIndex]} timeLeft={timeLeft} />
-      </div>
+      {isFeaturedLoading ? (
+        <Spinner />
+      ) : (
+        <Hero
+          key={featuredIndex}
+          featuredErrorMsg={featuredErrorMsg}
+          movie={featuredMovies[featuredIndex]}
+          timeLeft={timeLeft}
+        />
+      )}
       <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       <Movies
-        isLoading={isMoviesLoading}
         errorMessage={moviesErrorMsg}
         movies={movies}
         query={debouncedSearchTerm}
       />
-      <Spinner />
+      {isMoviesLoading ? (
+        <Spinner />
+      ) : (
+        totalPages > page && (
+          <Button
+            text="Load More"
+            callback={() => setPage((prev) => prev + 1)}
+          />
+        )
+      )}
     </>
   );
 };

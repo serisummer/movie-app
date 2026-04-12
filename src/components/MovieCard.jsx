@@ -1,10 +1,18 @@
 import "./MovieCard.css";
+import { Link } from "react-router-dom";
 
 const MovieCard = ({
-  movie: { title, vote_average, poster_path, release_date, original_language },
+  movie: {
+    id,
+    title,
+    vote_average,
+    poster_path,
+    release_date,
+    original_language,
+  },
 }) => {
   return (
-    <div className="movie">
+    <Link className="movie" to={`/movie/${id}`}>
       <img
         className="movie__poster"
         src={
@@ -19,7 +27,7 @@ const MovieCard = ({
         {release_date ? release_date.split("-")[0] : "N/A"} •
         {original_language ? original_language.toUpperCase() : "N/A"}
       </p>
-    </div>
+    </Link>
   );
 };
 

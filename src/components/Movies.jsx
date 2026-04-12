@@ -1,12 +1,10 @@
 import "./Movies.css";
 import MovieCard from "./MovieCard";
 
-const Movies = ({ isLoading, errorMessage, movies, query }) => {
+const Movies = ({ errorMessage, movies, query }) => {
   return (
     <div className="movies">
-      {isLoading ? (
-        <p className="movies__status">Loading...</p>
-      ) : errorMessage ? (
+      {errorMessage ? (
         <p className="movies__status">{errorMessage}</p>
       ) : (
         <div className="movies__list">
@@ -21,7 +19,7 @@ const Movies = ({ isLoading, errorMessage, movies, query }) => {
           </div>
           <ul className="movies__list__movies">
             {movies.map((movie) => (
-              <MovieCard key={movie.id} movie={movie}></MovieCard>
+              <MovieCard key={movie.id} movie={movie} />
             ))}
           </ul>
         </div>

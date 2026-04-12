@@ -1,0 +1,7 @@
+@import "tailwindcss";
+
+@layer components {
+  .breadcrumb {
+    @apply flex items-center text-sm text-white bg-gray-600 h-10 px-2 space-x-2;
+  }
+}
