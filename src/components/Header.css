@@ -10,11 +10,11 @@
   }
 
   .header__logo {
-    @apply m-2 w-[50px];
+    @apply m-2 w-12.5;
   }
 
   .header__name {
-    @apply text-white text-nowrap font-bold m-2 mt-4;
+    @apply text-white text-nowrap font-bold m-2;
     font-size: clamp(1.5rem, 4vw, 2rem);
   }
 

@@ -21,7 +21,7 @@
   }
 
   .hero__underlay {
-    @apply absolute inset-0 bg-gradient-to-t from-black/80 to-transparent;
+    @apply absolute inset-0 bg-linear-to-t from-black/80 to-transparent;
   }
 
   .hero__countdown {

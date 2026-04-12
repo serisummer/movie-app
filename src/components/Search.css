@@ -10,7 +10,7 @@
   }
 
   .search__img {
-    @apply w-[2rem] m-2;
+    @apply w-8 m-2;
   }
 
   .search__input {

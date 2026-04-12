@@ -63,7 +63,7 @@ const Home = () => {
       const response = await fetch(endpoint, OPTIONS);
       if (response.ok) {
         const data = await response.json();
-        setFeaturedMovies(data.results ?? []);
+        setFeaturedMovies(data.results.slice(0, 10) ?? []);
         return;
       } else {
         setFeaturedErrorMsg("Failed to fetch movies");
@@ -88,13 +88,13 @@ const Home = () => {
     if (featuredMovies.length === 0) return;
     const interval = setInterval(() => {
       setFeaturedIndex((prev) => (prev + 1) % featuredMovies.length);
-      setTimeLeft(15);
-    }, 15000);
+      setTimeLeft(10);
+    }, 10000);
     return () => clearInterval(interval);
   }, [featuredMovies]);
 
   useEffect(() => {
-    setTimeLeft(15);
+    setTimeLeft(10);
     const countdown = setInterval(() => {
       setTimeLeft((prev) => prev - 1);
     }, 1000);
