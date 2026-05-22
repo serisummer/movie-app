@@ -1,6 +1,6 @@
-import Breadcrumb from "../components/Breadcrumb";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import Breadcrumb from "../components/Breadcrumb";
 import Spinner from "../components/Spinner";
 
 const ACCESS_TOKEN = import.meta.env.VITE_TMDB_ACCESS_TOKEN;
@@ -13,7 +13,7 @@ const OPTIONS = {
   },
 };
 
-const MovieDetails = () => {
+const Movie = () => {
   const { id } = useParams();
   const [movie, setMovie] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -55,4 +55,4 @@ const MovieDetails = () => {
   );
 };
 
-export default MovieDetails;
+export default Movie;

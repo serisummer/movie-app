@@ -6,15 +6,15 @@
 @layer components {
   .header__navbar {
     @apply flex max-xs:flex-col justify-between items-center 
-           h-fit bg-teal-500;
+           h-fit bg-gray-800;
   }
 
   .header__logo {
-    @apply m-2 w-12.5;
+    @apply mx-2 w-12.5;
   }
 
   .header__name {
-    @apply text-white text-nowrap font-bold m-2;
+    @apply text-white text-nowrap font-bold mx-2;
     font-size: clamp(1.5rem, 4vw, 2rem);
   }
 
@@ -23,10 +23,10 @@
   }
 
   .header__menu {
-    @apply text-white list-none m-2;
+    @apply text-white list-none flex mx-2 mt-4;
   }
 
-  .header__menu_item {
-    @apply inline-block text-nowrap font-bold bg-teal-600 m-2 p-2 rounded-sm;
+  .header__menu__item {
+    @apply mx-2;
   }
 }
