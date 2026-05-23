@@ -1,11 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useDebounce } from "react-use";
+import { useSearchParams } from "react-router-dom";
 
 import Hero from "../components/Hero";
 import Search from "../components/Search";
 import Movies from "../components/Movies";
 import Spinner from "../components/Spinner";
 import Button from "../components/Button";
+import PageNav from "../components/PageNav";
 
 const ACCESS_TOKEN = import.meta.env.VITE_TMDB_ACCESS_TOKEN;
 const BASE_URL = "https://api.themoviedb.org/3/";
@@ -18,9 +20,25 @@ const OPTIONS = {
 };
 
 const Home = () => {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
-  useDebounce(() => setDebouncedSearchTerm(searchTerm), 500, [searchTerm]);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchTerm, setSearchTerm] = useState(searchParams.get("query") ?? "");
+  const debouncedSearchTerm = searchParams.get("query") ?? "";
+  const page = parseInt(searchParams.get("page") ?? "1");
+
+  const isFirstRender = useRef(true);
+  useDebounce(
+    () => {
+      if (isFirstRender.current) {
+        isFirstRender.current = false;
+        return;
+      }
+      setSearchParams({ query: searchTerm, page: "1" });
+    },
+    500,
+    [searchTerm],
+  );
+
+  const [totalPages, setTotalPages] = useState(1);
 
   const [movies, setMovies] = useState([]);
   const [isMoviesLoading, setIsMoviesLoading] = useState(false);
@@ -31,9 +49,6 @@ const Home = () => {
   const [featuredErrorMsg, setFeaturedErrorMsg] = useState("");
   const [featuredIndex, setFeaturedIndex] = useState(0);
   const [timeLeft, setTimeLeft] = useState(10);
-
-  const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
 
   const fetchMovies = async (query = "", currentPage = 1) => {
     setIsMoviesLoading(true);
@@ -70,10 +85,8 @@ const Home = () => {
       if (response.ok) {
         const data = await response.json();
         setFeaturedMovies((data.results ?? []).slice(0, 10));
-        return;
       } else {
         setFeaturedErrorMsg("Failed to fetch featured movies");
-        return;
       }
     } catch (error) {
       console.error(error);
@@ -82,6 +95,11 @@ const Home = () => {
     }
   };
 
+  useEffect(() => {
+    fetchMovies(debouncedSearchTerm, page);
+  }, [debouncedSearchTerm, page]);
+
+  // featured movies
   useEffect(() => {
     fetchFeaturedMovies();
   }, []);
@@ -103,16 +121,29 @@ const Home = () => {
     return () => clearInterval(countdown);
   }, [featuredIndex]);
 
-  useEffect(() => {
-    setPage(1);
-    fetchMovies(debouncedSearchTerm, 1);
-  }, [debouncedSearchTerm]);
+  // preserve scroll position
+  const handleMovieClick = () => {
+    sessionStorage.setItem("scrollY", window.pageYOffset);
+  };
 
+  const hasRestoredScroll = useRef(false);
   useEffect(() => {
-    if (page !== 1) {
-      fetchMovies(debouncedSearchTerm, page);
+    const scrollY = sessionStorage.getItem("scrollY");
+    if (
+      scrollY &&
+      !isMoviesLoading &&
+      movies.length > 0 &&
+      !hasRestoredScroll.current
+    ) {
+      hasRestoredScroll.current = true;
+      sessionStorage.removeItem("scrollY");
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          window.scrollTo(0, parseInt(scrollY));
+        });
+      });
     }
-  }, [page]);
+  }, [isMoviesLoading, movies]);
 
   return (
     <>
@@ -131,6 +162,7 @@ const Home = () => {
         errorMessage={moviesErrorMsg}
         movies={movies}
         query={debouncedSearchTerm}
+        onMovieClick={handleMovieClick}
       />
       {isMoviesLoading ? (
         <Spinner />
@@ -138,10 +170,20 @@ const Home = () => {
         totalPages > page && (
           <Button
             text="Load More"
-            callback={() => setPage((prev) => prev + 1)}
+            callback={() =>
+              setSearchParams({
+                query: debouncedSearchTerm,
+                page: String(page + 1),
+              })
+            }
           />
         )
       )}
+      <PageNav
+        currentPage={page}
+        totalPages={totalPages}
+        onPageChange={setSearchParams}
+      />
     </>
   );
 };

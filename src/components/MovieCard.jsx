@@ -10,9 +10,10 @@ const MovieCard = ({
     release_date,
     original_language,
   },
+  onMovieClick,
 }) => {
   return (
-    <Link className="movie" to={`/movie/${id}`}>
+    <Link className="movie" to={`/movie/${id}`} onClick={onMovieClick}>
       <img
         className="movie__poster"
         src={

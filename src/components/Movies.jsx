@@ -1,7 +1,7 @@
 import "./Movies.css";
 import MovieCard from "./MovieCard";
 
-const Movies = ({ errorMessage, movies, query }) => {
+const Movies = ({ errorMessage, movies, query, onMovieClick }) => {
   return (
     <div className="movies">
       {errorMessage ? (
@@ -19,7 +19,11 @@ const Movies = ({ errorMessage, movies, query }) => {
           </div>
           <ul className="movies__list__movies">
             {movies.map((movie) => (
-              <MovieCard key={movie.id} movie={movie} />
+              <MovieCard
+                key={movie.id}
+                movie={movie}
+                onMovieClick={onMovieClick}
+              />
             ))}
           </ul>
         </div>

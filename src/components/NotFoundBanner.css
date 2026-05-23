@@ -1,4 +1,4 @@
-@reference "tailwindcss";
+@import "tailwindcss";
 
 .not__found__banner {
   @apply flex flex-col items-center justify-center h-screen text-gray-800;
