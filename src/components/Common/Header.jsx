@@ -1,6 +1,7 @@
 import "./Header.css";
 import { Link } from "react-router-dom";
 import Button from "./Button";
+import Search from "./SearchBar";
 
 const Header = () => {
   return (
@@ -10,6 +11,7 @@ const Header = () => {
           <img className="header__logo" src="/movie-svgrepo-com.svg"></img>
           <h1 className="header__name">Cinnie</h1>
         </Link>
+        <Search />
         <ul className="header__menu">
           <li className="header__menu__item">
             <Button

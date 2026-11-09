@@ -2,7 +2,7 @@
 
 @layer components {
   .search {
-    @apply bg-gray-800 p-4 mt-4 max-w-[75vw] w-full mx-auto;
+    @apply bg-gray-800 p-4 max-w-[75vw] w-full mx-auto;
   }
 
   .search__container {

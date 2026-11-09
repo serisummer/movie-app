@@ -6,8 +6,12 @@
 
 @layer components {
   .header__navbar {
-    @apply flex max-xs:flex-col justify-between items-center 
+    @apply flex flex-row justify-between items-center 
            h-fit bg-gray-800;
+  }
+
+  .header__logo__name {
+    @apply flex flex-row shrink-0 items-center;
   }
 
   .header__logo {
@@ -19,15 +23,7 @@
     font-size: clamp(1.5rem, 4vw, 2rem);
   }
 
-  .header__logo__name {
-    @apply flex shrink-0;
-  }
-
   .header__menu {
-    @apply text-white list-none flex mx-2 mt-4;
-  }
-
-  .header__menu__item {
-    @apply mx-2;
+    @apply text-white list-none flex;
   }
 }

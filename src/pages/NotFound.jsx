@@ -1,4 +1,4 @@
-import NotFoundBanner from "../components/NotFoundBanner";
+import NotFoundBanner from "../components/NotFound/NotFoundBanner";
 
 const NotFound = () => {
   return (

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Breadcrumb from "../components/Breadcrumb";
-import Spinner from "../components/Spinner";
+import Breadcrumb from "../components/Movie/Breadcrumb";
+import Spinner from "../components/Common/Spinner";
 
 const ACCESS_TOKEN = import.meta.env.VITE_TMDB_ACCESS_TOKEN;
 const BASE_URL = "https://api.themoviedb.org/3/";

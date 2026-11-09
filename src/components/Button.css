@@ -1,8 +1,0 @@
-@reference "tailwindcss";
-
-@layer components {
-  button {
-    @apply block p-2 px-4 mb-4 mx-auto text-nowrap bg-teal-600 text-white font-bold rounded transition-colors duration-100
-    hover:bg-gray-400 active:bg-gray-500;
-  }
-}

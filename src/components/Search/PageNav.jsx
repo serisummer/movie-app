@@ -1,5 +1,5 @@
 import "./PageNav.css";
-import Button from "./Button";
+import Button from "../Common/Button";
 
 const PageNav = ({ currentPage, totalPages, onPageChange }) => {
   return (
